@@ -1,0 +1,24 @@
+<div class="homeBody">
+    <div class="huntPokemonInfoContainer">
+        <img class="huntPokemonImage" ng-src="{{pokemonToFight.sprites.front_default}}"/>
+        <div class="huntPokemonInfo">
+            <div class="huntPokemonName">{{pokemonToFight.name}}</div>
+            <div>LVL  {{pokemonToFight.level}}</div>
+            <div>HEALTH:  {{pokemonToFight.health}}/{{pokemonToFight.fullHealth}}</div>
+            
+        </div>
+        
+        
+    </div>
+    <div class="hunterInfoContainer">
+        <img class="huntPokemonImage" ng-src="https://s-media-cache-ak0.pinimg.com/originals/ce/2f/a4/ce2fa49e97db454d92e813ab4748590f.gif"/>
+        <div class="huntPokemonInfo">
+            <div class="huntPokemonName">{{fighter.name}}</div>
+            <div>LVL  {{fighter.level}}</div>
+            <div>HEALTH:  {{fighter.health}}/{{fighter.fullHealth}}</div>
+            <div>EXP:  {{fighter.experience}}/{{fighter.experienceNeeded}}</div>
+            <div>POWER:  {{fighter.attackPower}}</div>
+        </div>
+        <div ng-click="attack()">ATTACK!</div>
+    </div>
+</div>

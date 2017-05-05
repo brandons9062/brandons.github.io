@@ -1,0 +1,18 @@
+<div class="seePreyBody">
+    <div class="seePreyHeaderContainer">
+        <div class="seePreyHeaderContainer" id="fixedHeader">
+            <h1 class="seePreyHeaderText">These are the Pokemon wandering the area!</h1>
+        </div>
+    </div>
+
+    <div class="seePreySection">
+        <div class="preyContainer" ng-repeat="pokemon in pokemonInfo">
+            <img class="seePreyPic" ng-src="{{pokemon.sprites.front_default}}" />
+            <div class="preyName">{{pokemon.name}}</div>
+            <div>Level: {{pokemon.level}}</div>
+            <div>Health: {{pokemon.health}}</div>
+            <div>Attack Power: {{pokemon.attackPower}}</div>
+        </div>
+    </div>
+
+</div>
