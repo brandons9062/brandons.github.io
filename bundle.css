@@ -126,6 +126,40 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+.huntPokemonInfoContainer {
+  height: 50%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  justify-content: center; }
+
+.huntPokemonName {
+  font-size: 55px; }
+
+.hunterInfoContainer {
+  height: 50%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start; }
+
+.huntPokemonInfo {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  font-size: 35px;
+  margin-left: 2%; }
+
+.huntPokemonImage {
+  height: 100%;
+  width: 30%;
+  border: none; }
+
 .homeBody {
   height: 85vh;
   width: 100%;
@@ -185,40 +219,6 @@ table {
 
 .homeCreateHunterButton {
   width: 40%; }
-
-.huntPokemonInfoContainer {
-  height: 50%;
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap-reverse;
-  justify-content: center; }
-
-.huntPokemonName {
-  font-size: 55px; }
-
-.hunterInfoContainer {
-  height: 50%;
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start; }
-
-.huntPokemonInfo {
-  display: flex;
-  color: white;
-  flex-direction: column;
-  font-size: 35px;
-  margin-left: 2%; }
-
-.huntPokemonImage {
-  height: 100%;
-  width: 30%;
-  border: none; }
 
 body {
   height: 100%;

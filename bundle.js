@@ -24,7 +24,7 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
     this.getPokemonInfo = function (id) {
         return $http({
             method: 'GET',
-            url: "http://pokeapi.co/api/v2/pokemon/" + id
+            url: "https://pokeapi.co/api/v2/pokemon/" + id
         });
     };
     var service = this;
@@ -75,7 +75,7 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
         this.won = false;
         this.lost = false;
         this.attackPower = 10;
-        this.takeDamage = function (index) {
+        this.takeDamage = function () {
             var damage = service.pokemonToFight.attackPower;
             if (damage - this.health <= 0) {
                 this.health = 0;
@@ -125,6 +125,23 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
             service.pokemonToFight.health = 0;
             service.fighter.won = true;
             service.fighter.gainExperience(service.pokemonToFight.index);
+            service.getPokemon();
+        }
+        criticalChance = Math.floor(Math.random() * 10 + 1);
+        critical = 1;
+        if (criticalChance == 10) {
+            critical = 2;
+        }
+        dodge = Math.floor(Math.random() * 20 + 1);
+        var fighterHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower * critical;
+
+        if (pokemonHealthAfterDamage > 0) {
+            service.pokemonToFight.health = pokemonHealthAfterDamage;
+        } else {
+            service.pokemonToFight.health = 0;
+            service.fighter.won = true;
+            service.fighter.gainExperience(service.pokemonToFight.index);
+            service.getPokemon();
         }
     };
 }]);
