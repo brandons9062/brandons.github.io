@@ -126,66 +126,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-.huntPokemonInfoContainer {
-  height: 50%;
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap-reverse;
-  justify-content: center; }
-
-.huntPokemonName {
-  font-size: 55px; }
-
-.hunterInfoContainer {
-  height: 50%;
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start; }
-
-.huntPokemonInfo {
-  display: flex;
-  color: white;
-  flex-direction: column;
-  font-size: 35px;
-  margin-left: 2%; }
-
-.huntPokemonImage {
-  height: 100%;
-  width: 30%;
-  border: none; }
-
-.huntAttackButton {
-  height: 80px;
-  width: 120px;
-  position: absolute;
-  right: 20%;
-  font-family: 'Ravi Prakash', cursive;
-  font-size: 30px;
-  text-align: center; }
-
-.huntContinueHuntButton {
-  height: 80px;
-  width: 120px;
-  position: absolute;
-  right: 10%;
-  font-family: 'Ravi Prakash', cursive;
-  font-size: 20px;
-  text-align: center; }
-
-.deadPokemonImage {
-  height: 100%;
-  width: 30%;
-  border: none;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 2s, opacity 2s linear; }
-
 .homeBody {
   height: 85vh;
   width: 100%;
@@ -245,6 +185,66 @@ table {
 
 .homeCreateHunterButton {
   width: 40%; }
+
+.huntPokemonInfoContainer {
+  height: 50%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  justify-content: center; }
+
+.huntPokemonName {
+  font-size: 55px; }
+
+.hunterInfoContainer {
+  height: 50%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start; }
+
+.huntPokemonInfo {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  font-size: 35px;
+  margin-left: 2%; }
+
+.huntPokemonImage {
+  height: 100%;
+  width: 30%;
+  border: none; }
+
+.huntAttackButton {
+  height: 80px;
+  width: 120px;
+  position: absolute;
+  right: 20%;
+  font-family: 'Ravi Prakash', cursive;
+  font-size: 30px;
+  text-align: center; }
+
+.huntContinueHuntButton {
+  height: 80px;
+  width: 120px;
+  position: absolute;
+  right: 10%;
+  font-family: 'Ravi Prakash', cursive;
+  font-size: 20px;
+  text-align: center; }
+
+.deadPokemonImage {
+  height: 100%;
+  width: 30%;
+  border: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear; }
 
 body {
   height: 100%;

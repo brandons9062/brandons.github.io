@@ -1,7 +1,7 @@
-<div class="navDiv">
+<div class="navDiv" ng-controller="findAndFightCtrl">
         <nav>
             <div class="navOption" ui-sref="home">Create New Hunter</div>
-            <div class="navOption" ui-sref="hunt">Hunt</div>
+            <div class="navOption" ui-sref="hunt" ng-if="canHunt">Hunt</div>
             <div class="navOption" ui-sref="seePrey">See Potential Prey</div>
         </nav>
     </div>

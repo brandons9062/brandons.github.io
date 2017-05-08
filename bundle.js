@@ -31,6 +31,7 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
     var service = this;
     this.pokemonInfo = [];
     this.pokemonToFight;
+    service.canHunt = false;
 
     this.getPokemon = function (level) {
         service.pokemonInfo = [];
@@ -64,6 +65,11 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
 
                 service.pokemonToFight = service.pokemonInfo[Math.floor(Math.random() * service.pokemonInfo.length + 1)];
                 console.log(service.pokemonToFight);
+                console.log(service.pokemonInfo.length);
+
+                if (service.pokemonInfo.length == 10) {
+                    service.canHunt = true;
+                }
             });
         }
     };
@@ -115,28 +121,15 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
     };
 
     this.attack = function () {
-        //        var criticalChance = Math.floor((Math.random() * 10)+1);
-        //        var critical = 1;
-        //        if (criticalChance == 10){
-        //            critical = 2;
-        //        }
-        var dodge = Math.floor(Math.random() * 20 + 1);
-        var pokemonHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower;
+        var criticalChance = Math.floor(Math.random() * 10 + 1);
+        var critical = 1;
 
-        if (pokemonHealthAfterDamage > 0) {
-            service.pokemonToFight.health = pokemonHealthAfterDamage;
-        } else {
-            service.pokemonToFight.health = 0;
-            service.fighter.won = true;
-            service.fighter.gainExperience(service.pokemonToFight.index);
-            service.getPokemon();
+        var pokemonHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower * critical;
+
+        if (criticalChance == 10) {
+            critical = 2;
         }
-        //        criticalChance = Math.floor((Math.random() * 10)+1);
-        //        critical = 1;
-        //        if (criticalChance == 10){
-        //            critical = 2;
-        //        }
-        dodge = Math.floor(Math.random() * 20 + 1);
+        var dodge = Math.floor(Math.random() * 20 + 1);
         var fighterHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower;
 
         if (pokemonHealthAfterDamage > 0) {
@@ -156,10 +149,31 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
 }]);
 'use strict';
 
+angular.module('myApp').directive('deadPokemon', function () {
+    return {
+        restrict: 'A',
+        template: template
+    };
+});
+'use strict';
+
 angular.module('myApp').directive('navBar', function () {
     return {
         restrict: 'E',
-        templateUrl: './app/routes/home/navBar.html'
+        templateUrl: './app/routes/home/navBar.html',
+        controller: ["$scope", "pokemonService", function ($scope, pokemonService) {
+
+            var checkHunt = setInterval(function () {
+                if (pokemonService.canHunt === true) {
+                    $scope.canHunt = true;
+                    $scope.$apply();
+                    clearInterval(checkHunt);
+                    console.log($scope.canHunt);
+                } else {
+                    $scope.canHunt = false;
+                }
+            }, 500);
+        }]
     };
 });
 'use strict';
@@ -169,13 +183,10 @@ angular.module('myApp').controller('huntCtrl', ["$scope", "pokemonService", func
     $scope.pokemonInfo = pokemonService.pokemonInfo;
     $scope.fighter = pokemonService.fighter;
 
-    var pokemon = function pokemon() {
-        $scope.pokemonToFight = pokemonService.pokemonToFight;
-        $scope.attack = pokemonService.attack;
-    };
-    pokemon();
+    $scope.pokemonToFight = pokemonService.pokemonToFight;
+    $scope.attack = pokemonService.attack;
 
-    $scope.getPokemon = pokemonService.getPokemon($scope.fighter.level);
+    $scope.getPokemon = pokemonService.getPokemon;
 }]);
 'use strict';
 
