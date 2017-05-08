@@ -1,6 +1,6 @@
 <div class="homeBody">
     <div class="huntPokemonInfoContainer">
-        <img class="huntPokemonImage" ng-src="{{pokemonToFight.sprites.front_default}}"/>
+        <img id="pokemonImage" class="huntPokemonImage" ng-src="{{pokemonToFight.sprites.front_default}}"/>
         <div class="huntPokemonInfo">
             <div class="huntPokemonName">{{pokemonToFight.name}}</div>
             <div>LVL  {{pokemonToFight.level}}</div>
@@ -19,6 +19,7 @@
             <div>EXP:  {{fighter.experience}}/{{fighter.experienceNeeded}}</div>
             <div>POWER:  {{fighter.attackPower}}</div>
         </div>
-        <div ng-click="attack()">ATTACK!</div>
+        <button class="huntAttackButton" ng-click="attack()">ATTACK!</button>
+        <button class="huntContinueHuntButton" ng-click="getPokemon()" ui-sref="seePrey">Continue Your Hunt!</button>
     </div>
 </div>

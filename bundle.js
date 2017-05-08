@@ -15,6 +15,7 @@ angular.module('myApp', ['ui.router']).config(["$stateProvider", "$urlRouterProv
         templateUrl: './app/routes/hunt/huntTmpl.html',
         controller: 'huntCtrl'
     });
+
     $urlRouterProvider.otherwise('/');
 }]);
 'use strict';
@@ -33,6 +34,7 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
 
     this.getPokemon = function (level) {
         service.pokemonInfo = [];
+        service.fighter.won = false;
         if (!level) {
             var fighterLevel = 1;
             var lowPokeLevel = 1;
@@ -51,7 +53,7 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
 
                 response.data.level = Math.floor(Math.random() * highPokeLevel + lowPokeLevel);
 
-                response.data.attackPower = Math.floor(Math.random() * (response.data.level - (response.data.level - response.data.level / 3) + 1) + (response.data.level - response.data.level / 3));
+                response.data.attackPower = 10 + Math.ceil(10 * (response.data.level / 5 + 1));
 
                 response.data.health = Math.ceil(response.data.stats[5].base_stat * (response.data.level / 10) + 1);
                 response.data.fullHealth = response.data.health;
@@ -59,6 +61,7 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
                 response.data.index = i;
 
                 service.pokemonInfo.push(response.data);
+
                 service.pokemonToFight = service.pokemonInfo[Math.floor(Math.random() * service.pokemonInfo.length + 1)];
                 console.log(service.pokemonToFight);
             });
@@ -70,14 +73,14 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
         this.level = 1;
         this.experience = 0;
         this.experienceNeeded = 500;
-        this.fullHealth = 20;
-        this.health = 20;
+        this.fullHealth = 40;
+        this.health = 40;
         this.won = false;
         this.lost = false;
         this.attackPower = 10;
         this.takeDamage = function () {
             var damage = service.pokemonToFight.attackPower;
-            if (damage - this.health <= 0) {
+            if (this.health - damage <= 0) {
                 this.health = 0;
                 this.lost = true;
             } else {
@@ -87,17 +90,18 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
         this.gainExperience = function () {
             if (this.won) {
                 this.experience = this.experience + service.pokemonToFight.level * 200;
-                return function calcExperience() {
+                for (var i = 0; i < 1; i++) {
                     if (this.experience >= this.experienceNeeded) {
                         this.level += 1;
                         this.experience = this.experience - this.experienceNeeded;
                         this.experienceNeeded *= 2;
-                        this.fullHealth = this.fullHealth * (this.level / 5) + 1;
+                        this.fullHealth = Math.ceil(this.fullHealth * (this.level / 5 + 1));
                         this.health = this.fullHealth;
-                        calcExperience();
+                        i = 0;
+                        this.attackPower += Math.ceil(this.attackPower * (this.level / 5 + 1));
                     }
-                    this.won = false;
-                };
+                }
+                this.won = false;
             }
         };
     };
@@ -111,13 +115,13 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
     };
 
     this.attack = function () {
-        var criticalChance = Math.floor(Math.random() * 10 + 1);
-        var critical = 1;
-        if (criticalChance == 10) {
-            critical = 2;
-        }
+        //        var criticalChance = Math.floor((Math.random() * 10)+1);
+        //        var critical = 1;
+        //        if (criticalChance == 10){
+        //            critical = 2;
+        //        }
         var dodge = Math.floor(Math.random() * 20 + 1);
-        var pokemonHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower * critical;
+        var pokemonHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower;
 
         if (pokemonHealthAfterDamage > 0) {
             service.pokemonToFight.health = pokemonHealthAfterDamage;
@@ -127,21 +131,26 @@ angular.module('myApp').service('pokemonService', ["$http", function ($http) {
             service.fighter.gainExperience(service.pokemonToFight.index);
             service.getPokemon();
         }
-        criticalChance = Math.floor(Math.random() * 10 + 1);
-        critical = 1;
-        if (criticalChance == 10) {
-            critical = 2;
-        }
+        //        criticalChance = Math.floor((Math.random() * 10)+1);
+        //        critical = 1;
+        //        if (criticalChance == 10){
+        //            critical = 2;
+        //        }
         dodge = Math.floor(Math.random() * 20 + 1);
-        var fighterHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower * critical;
+        var fighterHealthAfterDamage = service.pokemonToFight.health - service.fighter.attackPower;
 
         if (pokemonHealthAfterDamage > 0) {
             service.pokemonToFight.health = pokemonHealthAfterDamage;
+            console.log(service.pokemonToFight.health);
+            service.fighter.takeDamage();
+            if (service.fighter.lost === true) {
+                alert("You underestimated your prey and now you're dead. Don't make the same mistake next time!");
+                service.fighter.lost = false;
+            }
         } else {
             service.pokemonToFight.health = 0;
             service.fighter.won = true;
             service.fighter.gainExperience(service.pokemonToFight.index);
-            service.getPokemon();
         }
     };
 }]);
@@ -160,8 +169,13 @@ angular.module('myApp').controller('huntCtrl', ["$scope", "pokemonService", func
     $scope.pokemonInfo = pokemonService.pokemonInfo;
     $scope.fighter = pokemonService.fighter;
 
-    $scope.pokemonToFight = pokemonService.pokemonToFight;
-    $scope.attack = pokemonService.attack;
+    var pokemon = function pokemon() {
+        $scope.pokemonToFight = pokemonService.pokemonToFight;
+        $scope.attack = pokemonService.attack;
+    };
+    pokemon();
+
+    $scope.getPokemon = pokemonService.getPokemon($scope.fighter.level);
 }]);
 'use strict';
 

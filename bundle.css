@@ -160,6 +160,32 @@ table {
   width: 30%;
   border: none; }
 
+.huntAttackButton {
+  height: 80px;
+  width: 120px;
+  position: absolute;
+  right: 20%;
+  font-family: 'Ravi Prakash', cursive;
+  font-size: 30px;
+  text-align: center; }
+
+.huntContinueHuntButton {
+  height: 80px;
+  width: 120px;
+  position: absolute;
+  right: 10%;
+  font-family: 'Ravi Prakash', cursive;
+  font-size: 20px;
+  text-align: center; }
+
+.deadPokemonImage {
+  height: 100%;
+  width: 30%;
+  border: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear; }
+
 .homeBody {
   height: 85vh;
   width: 100%;
@@ -235,6 +261,11 @@ nav {
   height: 70px;
   padding-top: 3%;
   font-weight: bolder; }
+
+.navOption:hover {
+  color: #C1FFF2;
+  font-size: 50px;
+  transition: font-size 500ms; }
 
 .seePreyHeaderText {
   position: absolute;
